@@ -345,6 +345,14 @@ jobs:
           python build_source_docs.py
           jupyter-book build openmdao_book
           python copy_build_artifacts.py
+          zip -r ./openmdao-docs.zip .;
+
+      - name: 'Upload docs'
+        uses: actions/upload-artifact@v2
+        with:
+          name: openmdao-docs
+          path: openmdao/docs/openmdao-docs.zip
+          retention-days: 7
 
       - name: Display doc build reports
         if: failure() && matrix.BUILD_DOCS && steps.build_docs.outcome == 'failure'
